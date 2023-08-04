@@ -1,0 +1,13 @@
+#variables de entorno
+.env
+
+#lock.json
+package-lock.json
+
+
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignorar la carpeta client del frontend
+client/
