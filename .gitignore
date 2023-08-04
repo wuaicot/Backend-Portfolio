@@ -4,6 +4,6 @@
 #lock.json
 package-lock.json
 
-#node_modules
+# Ignorar la carpeta node_modules
 /node_modules
 
