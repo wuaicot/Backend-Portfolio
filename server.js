@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'https://capable-platypus-f7f625.netlify.app',
+  origin: process.env.FRONTEND_URL,
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
