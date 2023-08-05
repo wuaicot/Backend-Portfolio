@@ -1,14 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const nodemailer = require('nodemailer');
-const { google } = require('googleapis')
+import { Router } from 'express';
+const router = Router();
+import { createTransport } from 'nodemailer';
+import { google } from 'googleapis';
 const { OAuth2 } = google.auth.OAuth2; 
-const ContactMessage = require('./models/ContactMessage');
+import { create } from './models/ContactMessage';
 require('dotenv').config();
 
 const sendEmail = async (name, email, message) => {
   try {
-    const transporter = nodemailer.createTransport({
+    const transporter = createTransport({
       service: 'gmail',
       auth: {
         type: OAuth2,
@@ -39,7 +39,7 @@ router.post('/contact', async (req, res) => {
     const { name, email, message } = req.body;
 
     // Crea un nuevo registro en la base de datos utilizando el modelo "ContactMessage"
-    const newContactMessage = await ContactMessage.create(name, email, message);
+    const newContactMessage = await create(name, email, message);
 
     // Envía el correo electrónico
     sendEmail(name, email, message);
@@ -52,4 +52,4 @@ router.post('/contact', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
