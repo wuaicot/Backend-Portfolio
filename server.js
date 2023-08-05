@@ -10,16 +10,9 @@ const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', `${ FRONTEND_URL }`);
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});
-
+// Add the CORS header to all responses
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: FRONTEND_URL,
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
