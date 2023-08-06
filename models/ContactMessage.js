@@ -1,4 +1,4 @@
-import { query as _query } from '../db';
+const pool = require('../db');
 
 class ContactMessage {
   static async create(name, email, message) {
@@ -8,7 +8,7 @@ class ContactMessage {
     };
 
     try {
-      const result = await _query(query);
+      const result = await pool.query(query);
       return result.rows[0];
     } catch (error) {
       console.error('Error creating contact message:', error);
@@ -17,4 +17,4 @@ class ContactMessage {
   }
 }
 
-export default ContactMessage;
+module.exports = ContactMessage;

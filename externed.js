@@ -1,25 +1,26 @@
-import { Router } from 'express';
+const { Router } = require('express');
+const { createTransport } = require('nodemailer');
+const { google } = require('googleapis');
+const { OAuth2 } = google.auth;
+const ContactMessage = require('./models/ContactMessage.js');
+const dotenv = require('dotenv');
+dotenv.config();
+
 const router = Router();
-import { createTransport } from 'nodemailer';
-import { google } from 'googleapis';
-const { OAuth2 } = google.auth.OAuth2; 
-import { create } from './models/ContactMessage';
-require('dotenv').config();
 
 const sendEmail = async (name, email, message) => {
   try {
     const transporter = createTransport({
       service: 'gmail',
       auth: {
-        type: OAuth2,
+        type: 'OAuth2',
         user: process.env.EMAIL_USER,
         clientId: process.env.CLIENT_ID,
-        accessToken: process.env.ACCESS_TOKEN,     
-        expires: 3599,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
       },
     });
 
-    // Envía el correo electrónico
     await transporter.sendMail({
       from: 'wuaicot8@gmail.com',
       to: email,
@@ -33,23 +34,33 @@ const sendEmail = async (name, email, message) => {
   }
 };
 
-
 router.post('/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
     // Crea un nuevo registro en la base de datos utilizando el modelo "ContactMessage"
-    const newContactMessage = await create(name, email, message);
+    const newContactMessage = await ContactMessage.create({
+      name,
+      email,
+      message,
+    });
 
     // Envía el correo electrónico
     sendEmail(name, email, message);
 
     // Responde con un mensaje de éxito
-    res.status(200).json({ message: 'Message received successfully! Check your email for confirmation.' });
+    res
+      .status(200)
+      .json({
+        message:
+          'Message received successfully! Check your email for confirmation.',
+      });
   } catch (error) {
     console.error('Error sending message:', error);
-    res.status(500).json({ message: 'Error sending message. Please try again later.' });
+    res.status(500).json({
+      message: 'Error sending message. Please try again later.',
+    });
   }
 });
 
-export default router;
+module.exports = router;
