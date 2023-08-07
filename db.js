@@ -7,7 +7,7 @@ const pool = new Pool({
     //rejectUnauthorized: false, // Solo si estás teniendo problemas con SSL en tu entorno local
   },
 });
-git 
+
 module.exports = pool;
 
 
