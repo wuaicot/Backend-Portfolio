@@ -3,9 +3,9 @@ require('dotenv').config();
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Utiliza la variable de entorno DATABASE_URL
-  ssl: {
-    //rejectUnauthorized: false, // Solo si estás teniendo problemas con SSL en tu entorno local
-  },
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
 });
 
 module.exports = pool;
