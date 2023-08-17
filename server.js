@@ -26,7 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors());
-app.use('/externed',contactRoute);
+app.use('/',contactRoute);
 
  app.use((err, req, res, next) => {
   const status = err.status || 500;
