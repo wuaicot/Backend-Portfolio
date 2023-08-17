@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "production": {
-    "use_env_variable": "DATABASE_URL"
+    "use_env_variable": "postgresql://postgres:fpVrsapayLmURd0WKl4S@containers-us-west-71.railway.app:6481/railway"
   },
   "keywords": [],
   "author": "",
