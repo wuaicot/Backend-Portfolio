@@ -15,7 +15,7 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(morgan("dev"));
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", `https://capable-platypus-f7f625.netlify.app`);  
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");  
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
@@ -43,7 +43,7 @@ app.listen(PORT, () => {
 });
 //process.env.FRONTEND_URL
 
- //res.header("Access-Control-Allow-Origin", `http://localhost:3000`); 
+ //res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
 
  //origin: 'https://capable-platypus-f7f625.netlify.app',
  
