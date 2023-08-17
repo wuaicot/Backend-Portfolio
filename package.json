@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "production": {
-    "use_env_variable": "postgresql://postgres:fpVrsapayLmURd0WKl4S@containers-us-west-71.railway.app:6481/railway"
+    "use_env_variable": "DATABASE_URL"
   },
   "keywords": [],
   "author": "",
@@ -31,4 +31,7 @@
     "pg": "^8.11.2",
     "sequelize": "^6.32.1"
   }
+  
 }
+
+
