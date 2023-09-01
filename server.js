@@ -3,19 +3,19 @@ const bodyParser = require('body-parser');
 const morgan = require("morgan");
 const cors = require('cors');
 const   contactRoute  = require('./externed');
-// const { NETLIFY_DOMAIN } = process.env;
-//require('dotenv').config();
-require('./db')
+ const { NETLIFY_DOMAIN } = process.env;
+require('dotenv').config();
+//require('./db')
 
 const app = express();
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 3003;
 
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(morgan("dev"));
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*" );  
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");  
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
@@ -26,7 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors());
-app.use(contactRoute);
+app.use( "/externed", contactRoute );
 
  app.use((err, req, res, next) => {
   const status = err.status || 500;
@@ -35,7 +35,11 @@ app.use(contactRoute);
   res.status(status).send(message);
 });
 
-// module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+ module.exports = app;
 
 
 // conn.sync({ force: false }).then(() => {
@@ -45,9 +49,7 @@ app.use(contactRoute);
 // });
 
  
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
 
 //process.env.FRONTEND_URL
 
