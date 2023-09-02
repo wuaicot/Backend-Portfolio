@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const morgan = require("morgan");
 const cors = require('cors');
 const   contactRoute  = require('./externed');
- const { NETLIFY_DOMAIN } = process.env;
+ //const { NETLIFY_DOMAIN } = process.env;
 require('dotenv').config();
 //require('./db')
 
@@ -15,7 +15,7 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(morgan("dev"));
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");  
+  res.header("Access-Control-Allow-Origin", "https://frontend-portfolio-production.up.railway.app");  
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
