@@ -1,7 +1,6 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Utiliza la variable de entorno DATABASE_URL para la cadena de conexión
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
