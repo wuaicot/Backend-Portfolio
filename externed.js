@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
-const { google } = require('googleapis')
-const { OAuth2 } = google.auth.OAuth2; 
+const { google } = require('googleapis');
+const { OAuth2 } = google.auth;
 const ContactMessage = require('./models/ContactMessage');
+
 require('dotenv').config();
 
 const sendEmail = async (name, email, message) => {
@@ -11,12 +12,16 @@ const sendEmail = async (name, email, message) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        type: OAuth2,
+        type: 'OAuth2',
         user: process.env.EMAIL_USER,
         clientId: process.env.CLIENT_ID,
-        accessToken: process.env.ACCESS_TOKEN,     
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
+        accessToken: process.env.ACCESS_TOKEN,
         expires: 3599,
       },
+      // Agrega esta configuración para especificar la autenticación 'PLAIN'
+      authMethod: 'PLAIN',
     });
 
     // Envía el correo electrónico
@@ -24,7 +29,7 @@ const sendEmail = async (name, email, message) => {
       from: 'wuaicot8@gmail.com',
       to: email,
       subject: 'Mensaje recibido',
-      text: `Hola ${name},\n\nGracias por contactarme. Su solictud sera revisada, y me prondre en contacto con usted  \n\nMensaje: ${message}`,
+      text: `Hola ${name},\n\nGracias por contactarme. Su solicitud será revisada, y me pondré en contacto con usted.\n\nMensaje: ${message}`,
     });
 
     console.log('Correo enviado correctamente.');
@@ -32,7 +37,6 @@ const sendEmail = async (name, email, message) => {
     console.error('Error al enviar el correo:', error);
   }
 };
-
 
 router.post('/contact', async (req, res) => {
   try {
@@ -53,6 +57,7 @@ router.post('/contact', async (req, res) => {
 });
 
 module.exports = router;
+
 
 
 

@@ -1,7 +1,7 @@
 const { Client } = require('pg');
 
 // Configura las variables de entorno para la conexión a la base de datos en tu entorno de producción
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:7NbazxY0e8vOHx3z0V4y@containers-us-west-181.railway.app:6322/railway';
+const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:JBVFWORW6B7gkDdPcnBU@containers-us-west-110.railway.app:6170/railway';
 
 // Crea una instancia del cliente PostgreSQL
 const client = new Client({
