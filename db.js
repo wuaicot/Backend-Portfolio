@@ -22,15 +22,6 @@ const pool = new Pool({
   port: process.env.DB_PORT
 });
 
-pool.query('SELECT NOW()', (err, res) => {
-  if(err) {
-    console.log('Error al conectar a la base de datos', err);
-  } else {
-    console.log('Conexión exitosa a la base de datos');
-  }
-  pool.end();
-});
-
 module.exports = pool;
 
 
