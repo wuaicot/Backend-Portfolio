@@ -1,39 +1,12 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "Mi portfolio digital",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "production": {
-    "use_env_variable": "DATABASE_URL"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "axios": "^1.4.0",
-    
-    "mocha": "^10.2.0",
-    
-    "nodemon": "^3.0.1",
-    "npm": "^9.8.1",
-    "sequelize-cli": "^6.6.1"
-  },
   "dependencies": {
-    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "googleapis": "^123.0.0",
-    "nodemailer": "^6.9.4",
-    "pg": "^8.11.2",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "g": "^2.0.1",
+    "googleapis": "^144.0.0",
     "morgan": "^1.10.0",
-    "sequelize": "^6.32.1"
+    "nodemailer": "^6.9.15",
+    "pg": "^8.13.0"
   }
-  
 }
-
-
