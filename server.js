@@ -34,20 +34,14 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(morgan('dev'));
 
-//          FOR DEVELOPMENT ENVIRONMENT
+// Configuración de CORS
+app.use(cors({
+  origin: 'https://frontend-portfolio-production.up.railway.app/',
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+}));
 
-//http://http://localhost:3000
-//https://frontend-portfolio-production.up.railway.app/
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://frontend-portfolio-production.up.railway.app/');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});
-
-app.use(cors());
 app.use('/externed', contactRoute);
 
 app.use((err, req, res, next) => {
@@ -55,8 +49,7 @@ app.use((err, req, res, next) => {
   const message = err.message || err;
   console.error(err);
   res.status(status).send(message);
-})
-
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
@@ -66,20 +59,8 @@ module.exports = app;
 
 
 
-// conn.sync({ force: false }).then(() => {
-//   server.listen(PORT, '0.0.0.0', () => {
-//     console.log(`listening at port ${PORT}`);
-//   });
-// });
 
- 
+//          FOR DEVELOPMENT ENVIRONMENT
 
-
-//process.env.FRONTEND_URL
-
- //res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
-
- //origin: 'https://capable-platypus-f7f625.netlify.app',
- 
- // res.header("Access-Control-Allow-Origin", `${ NETLIFY_DOMAIN }`);
- //
+//http://http://localhost:3000
+//https://frontend-portfolio-production.up.railway.app/
