@@ -36,7 +36,7 @@ app.use(morgan('dev'));
 
 // Configuración de CORS
 app.use(cors({
-  origin: 'https://frontend-portfolio-production.up.railway.app', // Sin barra diagonal final
+  origin: 'https://frontend-portfolio-production.up.railway.app/', // Sin barra diagonal final
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
