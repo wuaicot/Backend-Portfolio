@@ -37,7 +37,8 @@ const sendEmail = async (name, email, message) => {
 };
 
 // Ruta POST para recibir y manejar el formulario de contacto
-router.post('/contact', async (req, res) => {
+router.post('/contact', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://frontend-portfolio-production.up.railway.app');
   try {
     const { name, email, message } = req.body;
 
