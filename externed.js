@@ -4,8 +4,18 @@ const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 const { OAuth2 } = google.auth;
 const ContactMessage = require('./models/ContactMessage');
-
+const cors = require('cors'); // Importa CORS
 require('dotenv').config();
+
+// Habilitar CORS para el dominio del frontend
+const corsOptions = {
+  origin: 'https://frontend-portfolio-production.up.railway.app', // Dominio permitido
+  methods: 'GET,POST,OPTIONS,PUT,DELETE',
+  credentials: true, // Permite el uso de cookies si es necesario
+};
+
+// Aplica CORS solo para las rutas de este router
+router.use(cors(corsOptions));
 
 // Función para enviar correo electrónico
 const sendEmail = async (name, email, message) => {
@@ -37,8 +47,7 @@ const sendEmail = async (name, email, message) => {
 };
 
 // Ruta POST para recibir y manejar el formulario de contacto
-router.post('/contact', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://frontend-portfolio-production.up.railway.app');
+router.post('/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
