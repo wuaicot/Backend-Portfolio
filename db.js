@@ -13,11 +13,11 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 console.log('Attempting to connect to the database...');
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DB_DATABASE:', process.env.DB_DATABASE);
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-console.log('DB_PORT:', process.env.DB_PORT);
+console.log('DB_USER:', process.env.PGDATA);
+console.log('DB_HOST:', process.env.PGHOST);
+console.log('DB_DATABASE:', process.env.PGPASSWORD);
+console.log('DB_PASSWORD:', process.env.PGPORT);
+console.log('DB_PORT:', process.env.PGUSER);
 
 const pool = new Pool({
   user: process.env.DB_USER,
