@@ -9,7 +9,7 @@ require('dotenv').config();
 
 // Habilitar CORS para el dominio del frontend
 const corsOptions = {
-  origin: 'https://frontend-portfolio-production.up.railway.app', // Dominio permitido
+  origin: 'https://frontend-portfolio-production.up.railway.app/', // Dominio permitido
   methods: 'GET,POST,OPTIONS,PUT,DELETE',
   credentials: true, // Permite el uso de cookies si es necesario
 };
@@ -18,6 +18,7 @@ const corsOptions = {
 router.use(cors(corsOptions));
 
 // Función para enviar correo electrónico
+
 const sendEmail = async (name, email, message) => {
   try {
     const transporter = nodemailer.createTransport({
