@@ -20,11 +20,11 @@ console.log('DB_PASSWORD:', process.env.PGPORT);
 console.log('DB_PORT:', process.env.PGUSER);
 
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT
+  user: process.env.PGDATA,
+  host: process.env.PGHOST,
+  database: process.env.PGPASSWORD,
+  password: process.env.PGPORT,
+  port: process.env.PGUSER
 });
 
 pool.connect((err, client, release) => {
