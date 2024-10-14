@@ -7,6 +7,7 @@ const ContactMessage = require('./models/ContactMessage');
 
 require('dotenv').config();
 
+// Función para enviar correo electrónico
 const sendEmail = async (name, email, message) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -17,120 +18,46 @@ const sendEmail = async (name, email, message) => {
         clientId: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         refreshToken: process.env.REFRESH_TOKEN,
-        accessToken: process.env.ACCESS_TOKEN,
-        expires: 3599,
       },
-      // Agrega esta configuración para especificar la autenticación 'PLAIN'
-      authMethod: 'PLAIN',
     });
 
     // Envía el correo electrónico
     await transporter.sendMail({
-      from: 'wuaicot8@gmail.com',
+      from: process.env.EMAIL_USER,
       to: email,
       subject: 'Mensaje recibido',
-      text: `Hola ${name},\n\nGracias por contactarme. Su solicitud será revisada, y me pondré en contacto con usted.\n\nMensaje: ${message}`,
+      text: `Hola ${name},\n\nGracias por contactarme. Su solicitud será revisada y me pondré en contacto con usted.\n\nMensaje: ${message}`,
     });
 
     console.log('Correo enviado correctamente.');
   } catch (error) {
     console.error('Error al enviar el correo:', error);
+    throw new Error('Error al enviar el correo');
   }
 };
 
+// Ruta POST para recibir y manejar el formulario de contacto
 router.post('/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
-    // Crea un nuevo registro en la base de datos utilizando el modelo "ContactMessage"
+    // Validar los datos del formulario
+    if (!name || !email || !message) {
+      return res.status(400).json({ message: 'Por favor, rellene todos los campos.' });
+    }
+
+    // Crear un nuevo registro en la base de datos
     const newContactMessage = await ContactMessage.create(name, email, message);
 
-    // Envía el correo electrónico
-    sendEmail(name, email, message);
+    // Enviar correo electrónico
+    await sendEmail(name, email, message);
 
-    // Responde con un mensaje de éxito
-    res.status(200).json({ message: 'Message received successfully! Check your email for confirmation.' });
+    // Responder con un mensaje de éxito
+    res.status(200).json({ message: '¡Mensaje recibido exitosamente! Verifica tu correo electrónico para la confirmación.' });
   } catch (error) {
-    console.error('Error sending message:', error);
-    res.status(500).json({ message: 'Error sending message. Please try again later.' });
+    console.error('Error enviando el mensaje:', error);
+    res.status(500).json({ message: 'Error enviando el mensaje. Por favor, inténtelo de nuevo más tarde.' });
   }
 });
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-// const { Router } = require('express');
-// const { createTransport } = require('nodemailer');
-// const { google } = require('googleapis');
-// const { OAuth2 } = google.auth;
-// const ContactMessage = require('./models/ContactMessage.js');
-// const dotenv = require('dotenv');
-// dotenv.config();
-
-// const router = Router();
-
-// const sendEmail = async (name, email, message) => {
-//   try {
-//     const transporter = createTransport({
-//       service: 'gmail',
-//       auth: {
-//         type: 'OAuth2',
-//         user: process.env.EMAIL_USER,
-//         clientId: process.env.CLIENT_ID,
-//         clientSecret: process.env.CLIENT_SECRET,
-//         refreshToken: process.env.REFRESH_TOKEN,
-//       },
-//     });
-
-//     await transporter.sendMail({
-//       from: 'wuaicot8@gmail.com',
-//       to: email,
-//       subject: 'Mensaje recibido',
-//       text: `Hola ${name},\n\nGracias por contactarme. Su solictud sera revisada, y me prondre en contacto con usted  \n\nMensaje: ${message}`,
-//     });
-
-//     console.log('Correo enviado correctamente.');
-//   } catch (error) {
-//     console.error('Error al enviar el correo:', error);
-//   }
-// };
-
-// router.post('/contact', async (req, res) => {
-//   try {
-//     const { name, email, message } = req.body;
-
-//     // Crea un nuevo registro en la base de datos utilizando el modelo "ContactMessage"
-//     const newContactMessage = await ContactMessage.create({
-//       name,
-//       email,
-//       message,
-//     });
-
-//     // Envía el correo electrónico
-//     sendEmail(name, email, message);
-
-//     // Responde con un mensaje de éxito
-//     res
-//       .status(200)
-//       .json({
-//         message:
-//           'Message received successfully! Check your email for confirmation.',
-//       });
-//   } catch (error) {
-//     console.error('Error sending message:', error);
-//     res.status(500).json({
-//       message: 'Error sending message. Please try again later.',
-//     });
-//   }
-// });
-
-// module.exports = router;
