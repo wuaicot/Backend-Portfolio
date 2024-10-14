@@ -40,13 +40,13 @@ app.use(morgan('dev'));
 //https://frontend-portfolio-production.up.railway.app/
 
 app.use((req, res, next) => {
-  res.header('https://frontend-portfolio-production.up.railway.app/');
+  res.header('Access-Control-Allow-Origin', 'https://frontend-portfolio-production.up.railway.app');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.setHeader('Permissions-Policy', 'ch-ua-form-factor');
   next();
 });
+
 app.use(cors());
 app.use('/externed', contactRoute);
 
