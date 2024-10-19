@@ -13,18 +13,18 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 console.log('Attempting to connect to the database...');
-console.log('DB_USER:', process.env.PGDATA);
-console.log('DB_HOST:', process.env.PGHOST);
-console.log('DB_DATABASE:', process.env.PGPASSWORD);
-console.log('DB_PASSWORD:', process.env.PGPORT);
-console.log('DB_PORT:', process.env.PGUSER);
+console.log('DB_USER:', process.env.DB_USER);
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_DATABASE:', process.env.DB_DATABASE);
+console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
+console.log('DB_PORT:', process.env.DB_PORT);
 
 const pool = new Pool({
-  user: process.env.PGDATA,
-  host: process.env.PGHOST,
-  database: process.env.PGPASSWORD,
-  password: process.env.PGPORT,
-  port: process.env.PGUSER
+  user: process.env.DB_USER,        // Asegúrate de que las variables coincidan
+  host: process.env.DB_HOST,        // con las del archivo .env
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT
 });
 
 pool.connect((err, client, release) => {
@@ -37,6 +37,7 @@ pool.connect((err, client, release) => {
 });
 
 module.exports = pool;
+
 
 
 

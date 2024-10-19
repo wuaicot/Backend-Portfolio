@@ -20,42 +20,51 @@
 
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
-const contactRoute = require('./externed');
-
-require('dotenv').config();
+const contactRoute = require('./externed'); // Ruta de tu contacto
+require('dotenv').config(); // Cargar las variables de entorno
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
-app.use(bodyParser.json({ limit: '50mb' }));
+// Middleware para parsear el body en JSON (ya incluido en Express)
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Para datos de formularios
+
+// Middleware para logging de peticiones HTTP
 app.use(morgan('dev'));
 
-// Configuración de CORS
-app.use(cors({
-  origin: 'https://frontend-portfolio-production.up.railway.app/', // Sin barra diagonal final
+// Configuración de CORS para entornos de desarrollo y producción
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://frontend-portfolio-production.up.railway.app/' // Cambia esto por tu dominio en producción
+    : 'http://localhost:3000', // En desarrollo
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
-}));
+};
 
+app.use(cors(corsOptions));
+
+// Ruta para manejar el formulario de contacto
 app.use('/externed', contactRoute);
 
+// Manejo de errores global
 app.use((err, req, res, next) => {
+  console.error('Error:', err);
   const status = err.status || 500;
-  const message = err.message || err;
-  console.error(err);
-  res.status(status).send(message);
+  const message = err.message || 'Internal Server Error';
+  res.status(status).json({ error: message });
 });
 
+// Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
 module.exports = app;
+
 
 
 
