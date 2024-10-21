@@ -50,7 +50,7 @@ const sendEmail = async (name, email, message) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: 'Mensaje recibido',
-      text: `Hola ${name},\n\nGracias por contactarme. Su solicitud será revisada y me pondré en contacto con usted.\n\nMensaje: ${message}`,
+      text: `Hola ${name},\n\nGracias por contactarme. Su solicitud será revisada y me pondré en contacto con usted a la brevedad.\n\nMensaje: ${message}`,
     });
     console.log('Correo enviado correctamente.');
   } catch (error) {
