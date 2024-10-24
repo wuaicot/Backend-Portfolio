@@ -80,11 +80,15 @@ router.post('/contact', async (req, res) => {
     return res.status(200).json({ message: 'Mensaje enviado con éxito.' });
 
     // Enviar correo electrónico
-    await sendEmail(name, email, message);
+      //________________________________________
+
+       // await sendEmail(name, email, message);
+       
+       //__________________________________________
 
 
   } catch (error) {
-    console.error('Error enviando el mensaje:', error.stack); // Mostrar el stacktrace completo
+    console.error('Error enviando el mensaje:', error); // Mostrar el stacktrace completo
     return res.status(500).json({ message: 'Error enviando el mensaje. Por favor, inténtelo de nuevo más tarde.' });
   }
 });
