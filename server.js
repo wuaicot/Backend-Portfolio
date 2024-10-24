@@ -55,7 +55,7 @@ app.use('/externed', contactRoute);
 // Colocar encabezados globales para permitir CORS en todas las respuestas
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", process.env.NODE_ENV === 'production'
-    ? 'https://frontend-portfolio-production.up.railway.app/'
+    ? 'https://frontend-portfolio-production.up.railway.app'
     : 'http://localhost:3000'
   );
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
