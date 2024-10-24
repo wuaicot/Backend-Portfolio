@@ -38,7 +38,8 @@ app.use(morgan('dev'));
 // Configuración de CORS para entornos de desarrollo y producción
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? 'https://frontend-portfolio-production.up.railway.app/' // Cambia esto por tu dominio en producción
+    ? 'https://frontend-portfolio-production.up.railway.app'
+
     : 'http://localhost:3000', // En desarrollo
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
@@ -46,6 +47,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Habilita CORS para las solicitudes preflight
+
 
 // Ruta para manejar el formulario de contacto
 app.use('/externed', contactRoute);
