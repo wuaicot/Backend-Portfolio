@@ -10,7 +10,7 @@ const OAuth2 = google.auth.OAuth2;
 
 // Configuración de CORS
 const corsOptions = {
-  origin: 'http://localhost:3000', // Dominio permitido
+  origin: 'https://frontend-portfolio-production.up.railway.app/', // Dominio permitido
   methods: 'GET,POST,OPTIONS,PUT,DELETE',
   credentials: true, // Permite el uso de cookies si es necesario
 };
