@@ -38,20 +38,12 @@ app.use(morgan('dev'));
 // Configuración de CORS para entornos de desarrollo y producción
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? 'https://frontend-portfolio-production.up.railway.app/'
+    ? 'https://frontend-portfolio-production.up.railway.app' // Sin barra diagonal al final
     : 'http://localhost:3000', // En desarrollo
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 };
-
-
-     //sin interpolación
-// const corsOptions = {
-//   origin: 'http://localhost:3000', // Cambia esta línea para pruebas locales sin interpolación
-//   credentials: true,
-// };
-
 
 // Aplicar CORS globalmente con opciones definidas
 app.use(cors(corsOptions));
@@ -65,7 +57,7 @@ app.use((err, req, res, next) => {
   console.error('Error:', err);
   const status = err.status || 500;
   const message = err.message || 'Internal Server Error';
-  res.status(status).json({ error: message });
+  res.status(status).json({ error: message, stack: err.stack }); // Incluye el stack para depuración
 });
 
 // Iniciar el servidor
@@ -74,6 +66,7 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
 
 
 
