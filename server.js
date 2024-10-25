@@ -36,19 +36,21 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Para datos de
 app.use(morgan('dev'));
 
 // Configuración de CORS para entornos de desarrollo y producción
-// const corsOptions = {
-//   origin: process.env.NODE_ENV === 'production' 
-//     ? 'https://frontend-portfolio-production.up.railway.app'
-//     : 'http://localhost:3000', // En desarrollo
-//   credentials: true,
-//   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-//   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
-// };
-
 const corsOptions = {
-  origin: 'http://localhost:3000', // Cambia esta línea para pruebas locales sin interpolación
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://frontend-portfolio-production.up.railway.app'
+    : 'http://localhost:3000', // En desarrollo
   credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 };
+
+
+     //sin interpolación
+// const corsOptions = {
+//   origin: 'http://localhost:3000', // Cambia esta línea para pruebas locales sin interpolación
+//   credentials: true,
+// };
 
 
 // Aplicar CORS globalmente con opciones definidas

@@ -10,7 +10,7 @@ const OAuth2 = google.auth.OAuth2;
 
 // Configuración de CORS
 const corsOptions = {
-  origin: 'http://localhost:3000', 
+  origin: 'https://frontend-portfolio-production.up.railway.app', 
   methods: 'GET,POST,OPTIONS,PUT,DELETE',
   credentials: true, // Permite el uso de cookies si es necesario
 };
@@ -74,19 +74,15 @@ router.post('/contact', async (req, res) => {
     // Crear un nuevo registro en la base de datos
     const newContactMessage = await ContactMessage.create({ name, email, message });
 
+      //Enviar correo electrónico      
 
+    await sendEmail(name, email, message);
     
 
     // Responder con éxito después de enviar el correo
     return res.status(200).json({ message: 'Mensaje enviado con éxito.' });
 
-    //Enviar correo electrónico      
-
-    await sendEmail(name, email, message);
-
-      
-
-
+    
   } catch (error) {
     console.error('Error enviando el mensaje:', error); // Mostrar el stacktrace completo
     return res.status(500).json({ message: 'Error enviando el mensaje. Por favor, inténtelo de nuevo más tarde.' });
