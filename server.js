@@ -22,7 +22,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const contactRoute = require('./externed'); // Ruta de tu contacto
+const contactRoute = require('./externed'); // Ruta del contacto
 require('dotenv').config(); // Cargar las variables de entorno
 
 const app = express();
@@ -36,32 +36,27 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Para datos de
 app.use(morgan('dev'));
 
 // Configuración de CORS para entornos de desarrollo y producción
+// const corsOptions = {
+//   origin: process.env.NODE_ENV === 'production' 
+//     ? 'https://frontend-portfolio-production.up.railway.app'
+//     : 'http://localhost:3000', // En desarrollo
+//   credentials: true,
+//   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+// };
+
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? 'https://frontend-portfolio-production.up.railway.app'
-    : 'http://localhost:3000', // En desarrollo
+  origin: 'http://localhost:3000', // Cambia esta línea para pruebas locales sin interpolación
   credentials: true,
-  methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 };
 
-// Aplicar CORS globalmente
+
+// Aplicar CORS globalmente con opciones definidas
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Habilita CORS para las solicitudes preflight
+app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
 
 // Ruta para manejar el formulario de contacto
 app.use('/externed', contactRoute);
-
-// Colocar encabezados globales para permitir CORS en todas las respuestas
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.NODE_ENV === 'production'
-    ? 'https://frontend-portfolio-production.up.railway.app'
-    : 'http://localhost:3000'
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 // Manejo de errores global
 app.use((err, req, res, next) => {
@@ -84,7 +79,10 @@ module.exports = app;
 
 
 
+
+
 //          FOR DEVELOPMENT ENVIRONMENT
 
 //http://http://localhost:3000
+
 //https://frontend-portfolio-production.up.railway.app/
