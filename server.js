@@ -38,11 +38,11 @@ app.use(morgan('dev'));
 // Configuración de CORS para entornos de desarrollo y producción
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? 'https://frontend-portfolio-production.up.railway.app' // Sin barra diagonal al final
-    : 'http://localhost:3000', // En desarrollo
+    ? 'https://frontend-portfolio-production.up.railway.app'
+    : 'http://localhost:3000',
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
 };
 
 // Aplicar CORS globalmente con opciones definidas
