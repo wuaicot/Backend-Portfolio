@@ -41,9 +41,10 @@ const sendEmail = async (name, email, message) => {
         clientId: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         refreshToken: process.env.REFRESH_TOKEN,
-        accessToken: accessToken.token, // Utiliza el token de acceso
+        accessToken: process.env.ACCESS_TOKEN, // Accede al token de entorno
       },
     });
+    
 
     // Envía el correo electrónico
     await transporter.sendMail({
