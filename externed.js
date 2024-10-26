@@ -75,14 +75,16 @@ router.post('/contact', async (req, res) => {
     // Crear un nuevo registro en la base de datos
     const newContactMessage = await ContactMessage.create({ name, email, message });
 
-      //Enviar correo electrónico      
-
-    await sendEmail(name, email, message);
+      
     
 
     // Responder con éxito después de enviar el correo
     return res.status(200).json({ message: 'Mensaje enviado con éxito.' });
 
+    //Enviar correo electrónico      
+
+    await sendEmail(name, email, message);
+    
     
   } catch (error) {
     console.error('Error enviando el mensaje:', error); // Mostrar el stacktrace completo
