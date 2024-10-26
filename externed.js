@@ -16,7 +16,7 @@ const corsOptions = {
 };
 
 // Aplica CORS solo para las rutas de este router
-router.use(cors(corsOptions));
+// router.use(cors(corsOptions));
 
 // Función para enviar correo electrónico
 const sendEmail = async (name, email, message) => {
