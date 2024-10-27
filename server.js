@@ -45,22 +45,12 @@ const corsOptions = {
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
 };
 
-
-// const corsOptions = {
-//   origin: '*',
-//   credentials: true,
-//   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-//   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-// };
-
-
-
-// Aplicar CORS globalmente con opciones definidas
+// Aplicar CORS globalmente
 app.use(cors(corsOptions));
-//app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
+app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
 
 // Ruta para manejar el formulario de contacto
-app.use('/externed', cors(corsOptions), contactRoute); // Aplica CORS solo a rutas específicas si persiste el problema
+app.use('/externed', contactRoute); 
 
 // Manejo de errores global
 app.use((err, req, res, next) => {
@@ -76,6 +66,7 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
 
 
 
