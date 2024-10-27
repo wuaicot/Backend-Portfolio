@@ -26,7 +26,7 @@ const contactRoute = require('./externed'); // Ruta del contacto
 require('dotenv').config(); // Cargar las variables de entorno
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.DB_PORT || 3001;
 
 // Middleware para parsear el body en JSON (ya incluido en Express)
 app.use(express.json({ limit: '50mb' }));
@@ -36,28 +36,28 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Para datos de
 app.use(morgan('dev'));
 
 // Configuración de CORS para entornos de desarrollo y producción
-// const corsOptions = {
-//   origin: process.env.NODE_ENV === 'production' 
-//     ? 'https://frontend-portfolio-production.up.railway.app'
-//     : 'http://localhost:3000',
-//   credentials: true,
-//   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-//   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-// };
-
-
 const corsOptions = {
-  origin: '*',
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://frontend-portfolio-production.up.railway.app'
+    : 'http://localhost:3000',
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
 };
 
 
+// const corsOptions = {
+//   origin: '*',
+//   credentials: true,
+//   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+// };
+
+
 
 // Aplicar CORS globalmente con opciones definidas
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
+//app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
 
 // Ruta para manejar el formulario de contacto
 app.use('/externed', contactRoute);
