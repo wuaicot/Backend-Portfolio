@@ -3,20 +3,9 @@ const router = express.Router();
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 const ContactMessage = require('./models/ContactMessage');
-const cors = require('cors');
 require('dotenv').config();
 
 const OAuth2 = google.auth.OAuth2;
-
-// Configuración de CORS
-const corsOptions = {
-  origin: 'https://frontend-portfolio-production.up.railway.app', 
-  methods: 'GET,POST,OPTIONS,PUT,DELETE',
-  credentials: true, // Permite el uso de cookies si es necesario
-};
-
-// Aplica CORS solo para las rutas de este router
- router.use(cors(corsOptions));
 
 // Función para enviar correo electrónico
 const sendEmail = async (name, email, message) => {
@@ -45,7 +34,6 @@ const sendEmail = async (name, email, message) => {
       },
     });
     
-
     // Envía el correo electrónico
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -75,24 +63,20 @@ router.post('/contact', async (req, res) => {
     // Crear un nuevo registro en la base de datos
     const newContactMessage = await ContactMessage.create({ name, email, message });
 
-      //Enviar correo electrónico      
-
+    // Enviar correo electrónico      
     await sendEmail(name, email, message);
     
-
     // Responder con éxito después de enviar el correo
     return res.status(200).json({ message: 'Mensaje enviado con éxito.' });
 
-    
-    
-    
   } catch (error) {
-    console.error('Error enviando el mensaje:', error); // Mostrar el stacktrace completo
+    console.error('Error enviando el mensaje:', error);
     return res.status(500).json({ message: 'Error enviando el mensaje. Por favor, inténtelo de nuevo más tarde.' });
   }
 });
 
 module.exports = router;
+
 
 
 
