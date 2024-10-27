@@ -60,7 +60,7 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
 
 // Ruta para manejar el formulario de contacto
-app.use('/externed', contactRoute);
+app.use('/externed', cors(corsOptions), contactRoute); // Aplica CORS solo a rutas específicas si persiste el problema
 
 // Manejo de errores global
 app.use((err, req, res, next) => {
