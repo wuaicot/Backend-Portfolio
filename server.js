@@ -57,7 +57,7 @@ const corsOptions = {
 
 // Aplicar CORS globalmente con opciones definidas
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
+//app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
 
 // Ruta para manejar el formulario de contacto
 app.use('/externed', cors(corsOptions), contactRoute); // Aplica CORS solo a rutas específicas si persiste el problema
