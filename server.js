@@ -57,7 +57,7 @@ const corsOptions = {
 
 // Aplicar CORS globalmente con opciones definidas
 app.use(cors(corsOptions));
-app.options('https://frontend-portfolio-production.up.railway.app', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
+app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
 
 // Ruta para manejar el formulario de contacto
 app.use('/externed', contactRoute);
