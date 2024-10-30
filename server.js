@@ -26,7 +26,7 @@ const contactRoute = require('./externed'); // Ruta del contacto
 require('dotenv').config(); // Cargar las variables de entorno
 
 const app = express();
-const PORT = process.env.PORT || 3001; // Ajusta al puerto del servidor
+const PORT = process.env.PORT || 3001;
 
 // Middleware para parsear el body en JSON (ya incluido en Express)
 app.use(express.json({ limit: '50mb' }));
@@ -37,9 +37,7 @@ app.use(morgan('dev'));
 
 // Configuración de CORS para entornos de desarrollo y producción
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? 'https://frontend-portfolio-production.up.railway.app/' // Verifica que la URL esté correcta
-    : 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL, // URL exacta de tu frontend
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
@@ -48,8 +46,11 @@ const corsOptions = {
 // Aplicar CORS globalmente
 app.use(cors(corsOptions));
 
+// Middleware para manejar solicitudes preflight de CORS
+app.options('*', cors(corsOptions));
+
 // Ruta para manejar el formulario de contacto
-app.use('/externed', contactRoute); 
+app.use('/externed', contactRoute);
 
 // Manejo de errores global
 app.use((err, req, res, next) => {
@@ -70,7 +71,6 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-
 
 
 
