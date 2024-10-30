@@ -44,10 +44,10 @@ const corsOptions = {
 };
 
 // Aplicar CORS globalmente
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
 
 // Middleware para manejar solicitudes preflight de CORS
-app.options('*', cors(corsOptions));
+//app.options('*', cors(corsOptions));
 
 // Ruta para manejar el formulario de contacto
 app.use('/externed', contactRoute);
