@@ -37,7 +37,7 @@ app.use(morgan('dev'));
 
 // Configuración de CORS para entornos de desarrollo y producción
 const corsOptions = {
-  origin: process.env.FRONTEND_URL, // URL exacta de tu frontend
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000', // URL exacta de tu frontend
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
