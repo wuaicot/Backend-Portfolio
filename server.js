@@ -26,7 +26,7 @@ const contactRoute = require('./externed'); // Ruta del contacto
 require('dotenv').config(); // Cargar las variables de entorno
 
 const app = express();
-const PORT = process.env.DB_PORT || 3001;
+const PORT = process.env.PORT || 3001; // Ajusta al puerto del servidor
 
 // Middleware para parsear el body en JSON (ya incluido en Express)
 app.use(express.json({ limit: '50mb' }));
@@ -38,7 +38,7 @@ app.use(morgan('dev'));
 // Configuración de CORS para entornos de desarrollo y producción
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? 'https://frontend-portfolio-production.up.railway.app'
+    ? 'https://frontend-portfolio-production.up.railway.app/' // Verifica que la URL esté correcta
     : 'http://localhost:3000',
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
@@ -47,7 +47,6 @@ const corsOptions = {
 
 // Aplicar CORS globalmente
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Habilitar CORS para solicitudes preflight
 
 // Ruta para manejar el formulario de contacto
 app.use('/externed', contactRoute); 
@@ -57,7 +56,12 @@ app.use((err, req, res, next) => {
   console.error('Error:', err);
   const status = err.status || 500;
   const message = err.message || 'Internal Server Error';
-  res.status(status).json({ error: message, stack: err.stack }); // Incluye el stack para depuración
+  res.status(status).json({ error: message }); // Simplificado para producción
+});
+
+// Ruta de prueba para verificar el estado del servidor en Railway
+app.get('/status', (req, res) => {
+  res.status(200).send("Server is running correctly!");
 });
 
 // Iniciar el servidor
@@ -66,6 +70,7 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
 
 
 
